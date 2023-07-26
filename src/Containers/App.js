@@ -1,7 +1,7 @@
-import ErrorBoundary from "../src/Components/ErrorBoundary";
-import Home from "../src/Containers/Home";
-import Test from "../src/Containers/Test";
-import { AppContextProvider } from "../src/context/AppContext";
+import ErrorBoundary from "Components/ErrorBoundary";
+import Home from "Containers/Home";
+import Test from "Containers/Test";
+import { AppContextProvider } from "context/AppContext";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
