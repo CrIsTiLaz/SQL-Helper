@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTablesMockData } from "../utils/mockDataCopy";
+import { getTablesMockData } from "../utils/mockDataF";
 
 /**
  * Context to manage app state
