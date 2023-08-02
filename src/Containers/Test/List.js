@@ -1,5 +1,6 @@
 import React from "react";
 import { useCallback, useMemo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ListaBazeDeDate = ({ bazeDeDate, trimiteNumeBazaDeDate }) => {
   const [databases, setDatabases] = useState([]);
@@ -7,6 +8,7 @@ const ListaBazeDeDate = ({ bazeDeDate, trimiteNumeBazaDeDate }) => {
     // Funcția de încărcare a datelor
     fetchDatabases();
   }, []);
+  const navigate = useNavigate();
 
   const fetchDatabases = async () => {
     try {
@@ -15,10 +17,14 @@ const ListaBazeDeDate = ({ bazeDeDate, trimiteNumeBazaDeDate }) => {
       ); // Endpoint-ul API pentru a obține lista de baze de date
       const databaseName = await response.json();
       setDatabases(databaseName);
-      console.log("data2", databaseName); // Actualizăm state-ul cu datele obținute
     } catch (error) {
       console.error("Error fetching databases:", error);
     }
+  };
+
+  const redirectToHomePage = () => {
+    // Redirecționează către pagina de start
+    navigate("/test");
   };
 
   return (
@@ -26,7 +32,10 @@ const ListaBazeDeDate = ({ bazeDeDate, trimiteNumeBazaDeDate }) => {
       {bazeDeDate.map((numeBazaDeDate) => (
         <li
           key={numeBazaDeDate}
-          onClick={() => trimiteNumeBazaDeDate(numeBazaDeDate)}
+          onClick={() => {
+            trimiteNumeBazaDeDate(numeBazaDeDate);
+            redirectToHomePage();
+          }}
         >
           {numeBazaDeDate}
         </li>
