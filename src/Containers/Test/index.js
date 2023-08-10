@@ -21,35 +21,30 @@ const Test = () => {
     }
   };
 
-  const trimiteNumeBazaDeDateLaBackend = (numeBazaDeDate) => {
-    // Aici vei face cererea către backend pentru a trimite numele bazei de date.
-    // Folosește metoda fetch sau alte librării de cereri HTTP.
-    fetch("https://localhost:7010/api/connectDB", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ numeBazaDeDate }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Aici poți trata răspunsul primit de la backend (dacă este cazul).
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Eroare:", error);
-      });
-  };
-
   return (
     <div>
       <h1>Alege o bază de date:</h1>
-      <ListaBazeDeDate
-        bazeDeDate={databases}
-        trimiteNumeBazaDeDate={trimiteNumeBazaDeDateLaBackend}
-      />
+      <ListaBazeDeDate bazeDeDate={databases} />
     </div>
   );
 };
+
+export function selecteazaNumeBazaDeDate() {
+  const lista = document.getElementById("databases");
+  const numeBazaDeDateSelectat = lista.addEventListener(
+    "click",
+    function (event) {
+      if (event.target.nodeName === "LI") {
+        return event.target.textContent;
+      }
+    }
+  );
+  console.log(
+    "selecteazaNumeBazaDeDateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    numeBazaDeDateSelectat
+  );
+
+  return numeBazaDeDateSelectat;
+}
 
 export default Test;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTablesMockData } from "../utils/mockDataF";
+import { Route, useLocation } from "react-router-dom";
 
 /**
  * Context to manage app state
@@ -12,12 +13,13 @@ const AppContext = React.createContext(null);
  * giving access to context Data
  */
 
-export const AppContextProvider = ({ children }) => {
+export const AppContextProvider = ({ children, route }) => {
   const [data, setData] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
     async function getData() {
-      const newData = await getTablesMockData();
+      const database = location.state.database;
+      const newData = await getTablesMockData(database);
       setData(newData);
     }
     getData();

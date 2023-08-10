@@ -5,18 +5,19 @@ import { useNavigate } from "react-router-dom";
 const ListaBazeDeDate = ({ bazeDeDate }) => {
   const navigate = useNavigate();
 
-  const redirectToHomePage = () => {
+  const redirectToHomePage = (numeBazaDeDate) => {
     // Redirecționează către pagina de start
-    navigate("/test");
+    navigate("/test", { state: { database: numeBazaDeDate } });
   };
 
   return (
     <ul>
       {bazeDeDate.map((numeBazaDeDate) => (
         <li
+          id={"databases"}
           key={numeBazaDeDate}
           onClick={() => {
-            redirectToHomePage();
+            redirectToHomePage(numeBazaDeDate);
           }}
         >
           {numeBazaDeDate}
