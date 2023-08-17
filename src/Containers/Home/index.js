@@ -1,5 +1,4 @@
 import ImportFormDialog from "../../Components/ImportFormDialog";
-import Navbar from "../../Components/Navbar";
 import SideBar from "../../Components/SideBar";
 import Playground from "../../Containers/PlayGround";
 import useAppContext from "../..//hooks/useAppContext";
@@ -45,12 +44,12 @@ const Home = () => {
 
   return (
     <HomePageLayout
-      navBar={
-        <Navbar
-          onMenuButtonClick={toggleDrawerState}
-          onImportButtonClick={toggleImportDialogState}
-        />
-      }
+      // navBar={
+      //   <Navbar
+      //     onMenuButtonClick={toggleDrawerState}
+      //     onImportButtonClick={toggleImportDialogState}
+      //   />
+      // }
       sideBar={<SideBar showDrawer={showDrawer} items={sideBarItems} />}
     >
       {/* Content  for the Home page*/}

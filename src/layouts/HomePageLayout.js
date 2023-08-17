@@ -49,7 +49,6 @@ const HomePageLayout = ({ children, navBar, sideBar }) => {
 
 HomePageLayout.propTypes = {
   // componets for nav and sider
-  navBar: PropTypes.element.isRequired,
   sideBar: PropTypes.element.isRequired,
   children: PropTypes.arrayOf(PropTypes.element), // page contents
 };

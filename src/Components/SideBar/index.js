@@ -10,7 +10,8 @@ import { DEFAULT_STRINGS, DRAWER_WIDTH } from "../../utils/constants/common";
 import Proptypes from "prop-types";
 import Book from "@material-ui/icons/Book";
 import { getSyntaxMockData } from "../../utils/mockDataF";
-
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
 // SideBar Styles
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
@@ -50,8 +51,17 @@ const SideBar = ({ showDrawer = true, items = [] }) => {
       }}
       open={showDrawer}
     >
+      <IconButton
+        className={classes.menuButton}
+        //onClick={onMenuButtonClick}
+        disableRipple
+        edge="start"
+        aria-label="sidebar menu"
+      >
+        <MenuIcon />
+      </IconButton>
       <Box p={2}>
-        <Typography variant="h6">Tables</Typography>
+        <Typography variant="h6">{DEFAULT_STRINGS.TABLES}</Typography>
       </Box>
       {items.length === 0 ? (
         <EmptyState

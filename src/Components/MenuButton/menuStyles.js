@@ -3,6 +3,11 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const minWidth = 140;
 
 const menuButtonStyles = () => ({
+  buttonContainer: {
+    display: "flex",
+    gap: "9px", // Aici poți ajusta cât de mare să fie spațiul între butoane (în pixeli sau în altă unitate de măsură).
+  },
+
   button: {
     minWidth: minWidth,
     fontWeight: 500,
@@ -10,7 +15,7 @@ const menuButtonStyles = () => ({
     paddingTop: 8,
     paddingBottom: 8,
     "& > span": {
-      fontSize: "0.9em",
+      fontSize: "0.9rem",
     },
   },
   downloadIcon: {

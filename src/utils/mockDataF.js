@@ -1,7 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ListaBazeDeDate from "./List";
+import Typography from "@material-ui/core/Typography";
+import { DEFAULT_STRINGS } from "./constants/common";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Box from "@material-ui/core/Box";
 
+const useStyles = makeStyles((theme) => ({
+  db: {
+    marginTop: 70,
+    backgroundColor: theme.palette.primary.main,
+  },
+}));
 async function fetchData(numeBazaDeDate) {
   console.log("numeBazaDeDate", numeBazaDeDate);
   try {
@@ -39,13 +49,11 @@ export const getTablesMockData = (database) => {
           rows: tableRows,
         };
       });
-
-      //console.log("result", result);
       return result;
     })
     .catch((error) => {
       console.error(error);
-      throw error; // Propagăm eroarea mai departe, dacă este necesar
+      throw error;
     });
 };
 
@@ -81,16 +89,15 @@ export const getSyntaxMockData = () => ({
 
 const Test = () => {
   const [databases, setDatabases] = useState([]);
-
+  const classes = useStyles();
   useEffect(() => {
-    // Funcția de încărcare a datelor
     fetchDatabases();
   }, []);
   const fetchDatabases = async () => {
     try {
       const response = await fetch(
         "https://localhost:7010/api/exportDatabases"
-      ); // Endpoint-ul API pentru a obține lista de baze de date
+      );
       const databaseName = await response.json();
       setDatabases(databaseName);
       console.log("data2", databaseName); // Actualizăm state-ul cu datele obținute
@@ -100,30 +107,13 @@ const Test = () => {
   };
 
   return (
-    <div>
-      <h1>Alege o bază de date:</h1>
+    <div className={classes.db}>
+      <Box p={2}>
+        <Typography variant="h6">{DEFAULT_STRINGS.SELECT_DATABSE}</Typography>
+      </Box>
       <ListaBazeDeDate bazeDeDate={databases} />
     </div>
   );
 };
-
-function selecteazaNumeBazaDeDate() {
-  const lista = document.getElementById("databases");
-  console.log("lista", lista);
-  // const numeBazaDeDateSelectat = lista.addEventListener(
-  //   "click",
-  //   function (event) {
-  //     if (event.target.nodeName === "li") {
-  //       return event.target.textContent;
-  //     }
-  //   }
-  // );
-  // console.log(
-  //   "selecteazaNumeBazaDeDateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-  //   numeBazaDeDateSelectat
-  // );
-
-  return "Books";
-}
 
 export default Test;

@@ -29,7 +29,7 @@ const Navbar = ({ onMenuButtonClick = noop, onImportButtonClick = noop }) => {
   return (
     <AppBar position="absolute" className={classes.appBar}>
       <Toolbar>
-        <IconButton
+        {/* <IconButton
           className={classes.menuButton}
           onClick={onMenuButtonClick}
           disableRipple
@@ -37,7 +37,7 @@ const Navbar = ({ onMenuButtonClick = noop, onImportButtonClick = noop }) => {
           aria-label="sidebar menu"
         >
           <MenuIcon />
-        </IconButton>
+        </IconButton> */}
         <Typography
           className={classes.navTitle}
           color="textPrimary"
@@ -45,7 +45,8 @@ const Navbar = ({ onMenuButtonClick = noop, onImportButtonClick = noop }) => {
         >
           {DEFAULT_STRINGS.APP_TITLE}
         </Typography>
-        <Button
+        {/* Butonul original din header ce contine import */}
+        {/* <Button
           variant="outlined"
           color="secondary"
           size="small"
@@ -53,7 +54,7 @@ const Navbar = ({ onMenuButtonClick = noop, onImportButtonClick = noop }) => {
           onClick={onImportButtonClick}
         >
           {DEFAULT_STRINGS.IMPORT_DATA}
-        </Button>
+        </Button> */}
       </Toolbar>
     </AppBar>
   );
@@ -61,7 +62,7 @@ const Navbar = ({ onMenuButtonClick = noop, onImportButtonClick = noop }) => {
 
 export default Navbar;
 
-Navbar.propTypes = {
-  onMenuButtonClick: PropTypes.func.isRequired,
-  onImportButtonClick: PropTypes.func.isRequired,
-};
+// Navbar.propTypes = {
+//   onMenuButtonClick: PropTypes.func.isRequired,
+//   onImportButtonClick: PropTypes.func.isRequired,
+// };

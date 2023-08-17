@@ -5,6 +5,8 @@ import Paper from "@material-ui/core/Paper";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import EditableTabs from "../../Components/EditableTabs";
 import MenuButton from "../../Components/MenuButton";
+import ImportFormDialog from "../../Components/ImportFormDialog";
+import { useState } from "react";
 import {
   EDITOR_TAB_ADD,
   EDITOR_TAB_CHANGE,
@@ -37,7 +39,15 @@ const EditorControls = ({
   onRunQuery = noop,
 }) => {
   const classes = useStyles();
+  const [showImportDialog, setShowImportDialog] = useState(false);
 
+  const toggleImportDialogState = () => {
+    setShowImportDialog((val) => !val);
+  };
+
+  const handleImportDialogSuccess = () => {
+    setShowImportDialog((val) => !val);
+  };
   return (
     <Paper square classes={{ root: classes.controlsWrapperRootStyles }}>
       <EditableTabs
@@ -64,6 +74,12 @@ const EditorControls = ({
         <MenuButton
           title="EXPORT"
           menuItems={["CSV File", "XML File", "JSON File"]}
+          onImportButtonClick={toggleImportDialogState}
+        />
+        <ImportFormDialog
+          showDialog={showImportDialog}
+          handleCancelAction={toggleImportDialogState}
+          handleSuccessAction={handleImportDialogSuccess}
         />
       </Box>
     </Paper>

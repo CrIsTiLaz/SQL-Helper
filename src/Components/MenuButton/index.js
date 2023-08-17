@@ -7,8 +7,14 @@ import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
 import { noop } from "../../utils/constants/common";
 import PropTypes from "prop-types";
-
-const MenuButton = ({ title = "", menuItems = [], onMenuItemClick = noop }) => {
+import PublishIcon from "@material-ui/icons/Publish";
+import { DEFAULT_STRINGS } from "../../utils/constants/common"; //;../../utils/constants/common
+const MenuButton = ({
+  title = "",
+  menuItems = [],
+  onMenuItemClick = noop,
+  onImportButtonClick = noop,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const classes = useMenuStyles();
@@ -28,20 +34,32 @@ const MenuButton = ({ title = "", menuItems = [], onMenuItemClick = noop }) => {
 
   return (
     <div>
-      <Button
-        variant="outlined"
-        color="secondary"
-        className={classes.button}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <GetAppRoundedIcon className={classes.downloadIcon} />
-        <span>{title}</span>
-        <ExpandMoreIcon
-          className={anchorEl ? classes.upIcon : classes.downIcon}
-        />
-      </Button>
+      <div className={classes.buttonContainer}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          className={classes.button}
+          size="small"
+          startIcon={<PublishIcon />}
+          onClick={onImportButtonClick}
+        >
+          {DEFAULT_STRINGS.IMPORT_DATA}
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          className={classes.button}
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <GetAppRoundedIcon className={classes.downloadIcon} />
+          <span>{title}</span>
+          <ExpandMoreIcon
+            className={anchorEl ? classes.upIcon : classes.downIcon}
+          />
+        </Button>
+      </div>
       {/*  menu items for Menu Button */}
       <Menu
         id="simple-menu"
