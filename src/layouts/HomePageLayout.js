@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import clsx from "clsx";
-
+import { AppContextProvider } from "../context/AppContext";
 // css styles for Homepage layout
 const useStyles = makeStyles({
   mainContainer: {

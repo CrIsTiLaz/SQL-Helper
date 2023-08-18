@@ -6,6 +6,7 @@ import QueryResultTable from "../../Components/QueryResultTable";
 import useAppContext from "../../hooks/useAppContext";
 import DnsIcon from "@material-ui/icons/Dns";
 import { DEFAULT_STRINGS } from "../../utils/constants/common";
+import { AppContextProvider } from "../../context/AppContext";
 
 /**
  * Playground for SQL
@@ -27,18 +28,20 @@ const Playground = () => {
   }, [tablesData]);
 
   return (
-    <Box display="flex" height="100%" width="100%" flexDirection="column">
-      <QueryEditor onRunQuery={handleOnQueryRun} />
-      {!queryResults ? (
-        <EmptyState
-          icon={<DnsIcon fontSize="large" />}
-          title={DEFAULT_STRINGS.WELCOME_MESSAGE_TITLE}
-          subtitle={DEFAULT_STRINGS.WELCOME_MESSAGE_SUBTITLE}
-        />
-      ) : (
-        <QueryResultTable tableData={queryResults} />
-      )}
-    </Box>
+    <AppContextProvider>
+      <Box display="flex" height="100%" width="100%" flexDirection="column">
+        <QueryEditor onRunQuery={handleOnQueryRun} />
+        {!queryResults ? (
+          <EmptyState
+            icon={<DnsIcon fontSize="large" />}
+            title={DEFAULT_STRINGS.WELCOME_MESSAGE_TITLE}
+            subtitle={DEFAULT_STRINGS.WELCOME_MESSAGE_SUBTITLE}
+          />
+        ) : (
+          <QueryResultTable tableData={queryResults} />
+        )}
+      </Box>
+    </AppContextProvider>
   );
 };
 
