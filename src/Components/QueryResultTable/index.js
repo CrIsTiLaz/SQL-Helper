@@ -57,7 +57,7 @@ const QueryResultTable = ({ tableData = {} }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   console.log("tableData ", tableData);
-  const { rows: tableRows = [], metaData } = tableData;
+  const { rows: tableRows = [] } = tableData;
 
   // handles pagination change
   const handleChangePage = (event, newPage) => {
@@ -104,10 +104,10 @@ const QueryResultTable = ({ tableData = {} }) => {
           aria-label="Query result table"
         >
           {/* Table Header */}
-          <TableHeader
+          {/* <TableHeader
             headerCells={getTableHeaderCells(metaData)}
             rowCount={filteredRows.length}
-          />
+          /> */}
 
           {/* Table Body */}
           <TableBody>

@@ -110,7 +110,7 @@ const QueryEditor = ({ onRunQuery = noop }) => {
           />
         ) : (
           //console.log("query result", queryResults) &
-          <QueryResultTable tableData={queryResults} />
+          <QueryResultTable tableData={{ rows: queryResults }} />
         )}
       </Box>
     </AppContextProvider>
