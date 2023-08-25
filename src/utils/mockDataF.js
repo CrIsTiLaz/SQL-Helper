@@ -21,7 +21,7 @@ async function fetchData(numeBazaDeDate) {
       )}`
     );
     const responseData = await response.data;
-
+    console.log("responseeee ", responseData);
     return responseData;
   } catch (error) {
     console.error(error);

@@ -52,11 +52,11 @@ const getTableHeaderCells = (metaData) => {
 
 const QueryResultTable = ({ tableData = {} }) => {
   const classes = useStyles();
-
+  console.log("tableDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ", tableData);
   // state for paginatination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  console.log("tableData ", tableData);
   const { rows: tableRows = [], metaData } = tableData;
 
   // handles pagination change
@@ -111,21 +111,21 @@ const QueryResultTable = ({ tableData = {} }) => {
 
           {/* Table Body */}
           <TableBody>
-            {filteredRows.map((row, rowIndex) => {
+            {filteredRows.map((row) => {
               return (
                 <TableRow
                   className={classes.tableRowItem}
                   hover
                   tabIndex={-1}
-                  key={`result-row-${rowIndex}`}
+                  key={`result-row-${row.id}`}
                   onClick={() => {
                     handleTableRowClick(row);
                   }}
                 >
-                  {Object.keys(row).map((key, cellIndex) => (
+                  {Object.keys(row).map((key) => (
                     <TableCell
                       className={classes.tableCell}
-                      key={`result-cell-${key}-${rowIndex}-${cellIndex}`}
+                      key={`result-cell-${key}-${row.id}-${key.id}`}
                     >
                       {row[key]}
                     </TableCell>

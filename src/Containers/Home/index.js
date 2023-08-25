@@ -1,6 +1,7 @@
 import ImportFormDialog from "../../Components/ImportFormDialog";
 import SideBar from "../../Components/SideBar";
-import Playground from "../../Containers/PlayGround";
+// import Playground from "../Containers/PlayGround";
+import QueryEditor from "../../Components/QueryEditor";
 import useAppContext from "../..//hooks/useAppContext";
 import HomePageLayout from "../..//layouts/HomePageLayout";
 import { useCallback, useMemo, useState } from "react";
@@ -53,7 +54,7 @@ const Home = () => {
       sideBar={<SideBar showDrawer={showDrawer} items={sideBarItems} />}
     >
       {/* Content  for the Home page*/}
-      <Playground />
+      <QueryEditor />
       <ImportFormDialog
         showDialog={showImportDialog}
         handleCancelAction={toggleImportDialogState}
