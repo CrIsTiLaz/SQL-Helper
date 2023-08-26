@@ -59,11 +59,22 @@ const QueryResultTable = ({ tableData = {} }) => {
   console.log("tableData ", tableData);
   const { rows: tableRows = [] } = tableData;
 
+  const columnNames =
+    tableData.rows && tableData.rows.length > 0
+      ? Object.keys(tableData.rows[0])
+      : [];
+
+  console.log("columnNames", columnNames);
   // handles pagination change
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  const headerCells = columnNames.map((name) => ({
+    id: name,
+    numeric: false,
+    label: name,
+  }));
+  console.log("headerCells", headerCells);
   // handles number of result to be show per page
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -104,20 +115,20 @@ const QueryResultTable = ({ tableData = {} }) => {
           aria-label="Query result table"
         >
           {/* Table Header */}
-          {/* <TableHeader
-            headerCells={getTableHeaderCells(metaData)}
+          <TableHeader
+            headerCells={headerCells}
             rowCount={filteredRows.length}
-          /> */}
+          />
 
           {/* Table Body */}
           <TableBody>
-            {filteredRows.map((row) => {
+            {filteredRows.map((row, index) => {
               return (
                 <TableRow
                   className={classes.tableRowItem}
                   hover
                   tabIndex={-1}
-                  key={`result-row-${row.id}`}
+                  key={`result-row-${row.id || index}`}
                   onClick={() => {
                     handleTableRowClick(row);
                   }}
@@ -125,7 +136,7 @@ const QueryResultTable = ({ tableData = {} }) => {
                   {Object.keys(row).map((key) => (
                     <TableCell
                       className={classes.tableCell}
-                      key={`result-cell-${key}-${row.id}-${key.id}`}
+                      key={`result-cell-${key}-${row.id || index}`}
                     >
                       {row[key]}
                     </TableCell>

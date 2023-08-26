@@ -37,6 +37,7 @@ const EditorControls = ({
   editorTabs = [],
   updateEditorTabs = noop,
   onRunQuery = noop,
+  onExport = noop, // Adaugă această propietate
 }) => {
   const classes = useStyles();
   const [showImportDialog, setShowImportDialog] = useState(false);
@@ -73,9 +74,11 @@ const EditorControls = ({
         </Button>
         <MenuButton
           title="EXPORT"
-          menuItems={["CSV File", "XML File", "JSON File"]}
+          menuItems={["CSV File", "JSON File", "SQL Query"]}
           onImportButtonClick={toggleImportDialogState}
+          onMenuItemClick={onExport}
         />
+
         <ImportFormDialog
           showDialog={showImportDialog}
           handleCancelAction={toggleImportDialogState}
@@ -91,4 +94,5 @@ EditorControls.propTypes = {
   editorTabs: PropTypes.array,
   updateEditorTabs: PropTypes.func.isRequired,
   onRunQuery: PropTypes.func.isRequired,
+  // onExport: PropTypes.func.isRequired, // Aceasta este noua adăugare
 };

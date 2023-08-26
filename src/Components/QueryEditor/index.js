@@ -61,6 +61,59 @@ const QueryEditor = ({ onRunQuery = noop }) => {
       showToast(TOAST_ERROR, "Error running query");
     }
   };
+
+  const handleExport = (format) => {
+    console.log("formattttttttt", format);
+    const data = queryResults;
+    if (!data) {
+      showToast(TOAST_ERROR, "No data to export");
+      return;
+    }
+    if (format === "SQL Query") {
+      const blob = new Blob([currentQuery], { type: "text/sql" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.download = "query.sql";
+      a.href = url;
+      a.click();
+      a.remove();
+      return; // să iesim din funcție după export
+    }
+    if (format === "CSV File") {
+      // Convertește datele în format CSV
+      const csvData = dataToCSV(data);
+
+      const blob = new Blob([csvData], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.download = "data.csv";
+      a.href = url;
+      a.click();
+      a.remove();
+    } else if (format === "JSON File") {
+      // Cod pentru export în JSON
+      const json = JSON.stringify(data);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.download = "data.json";
+      a.href = url;
+      a.click();
+      a.remove();
+    }
+  };
+  function dataToCSV(data) {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return "";
+    }
+
+    const header = Object.keys(data[0]).join(",");
+    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
+
+    return header + "\n" + rows;
+  }
   return (
     <AppContextProvider>
       <Box display="flex" height="100%" width="100%" flexDirection="column">
@@ -69,7 +122,9 @@ const QueryEditor = ({ onRunQuery = noop }) => {
             editorTabs={editorTabs}
             updateEditorTabs={updateEditorTabs}
             onRunQuery={handleRunQuery}
+            onExport={handleExport}
           />
+
           <Suspense fallback={<EditorLoader />}>
             <LazyEditor
               aria-label="query editor input"
