@@ -12,7 +12,10 @@ import Book from "@material-ui/icons/Book";
 import { getSyntaxMockData } from "../../utils/mockDataF";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
+import React from "react";
+import TableNameContext from "../../context/TableNameContext";
 // SideBar Styles
+
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     [theme.breakpoints.up("sm")]: {
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 // SideBar Component
 const SideBar = ({ showDrawer = true, items = [] }) => {
   const classes = useStyles();
-
+  //const { selectedTableName } = useContext(TableNameContext);
   return (
     <Drawer
       variant="permanent"

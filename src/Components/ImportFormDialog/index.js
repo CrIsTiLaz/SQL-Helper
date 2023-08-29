@@ -6,7 +6,9 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { DEFAULT_STRINGS, noop } from "../../utils/constants/common";
-
+import TableNameContext from "../../context/TableNameContext";
+import { useContext, useState } from "react";
+import { AppContext } from "../../context/AppContext";
 const useStyles = makeStyles({
   input: {
     display: "none",
@@ -18,13 +20,81 @@ const ImportFormDialog = ({
   handleCancelAction = noop,
   handleSuccessAction = noop,
 }) => {
+  const { selectedTableName } = useContext(TableNameContext);
+
+  const [selectedFile, setSelectedFile] = useState(null); // Stare pentru fișier
+  const { database } = useContext(AppContext);
+  console.log("database from import", database);
+  console.log("selectedTableName import", selectedTableName);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]); // Actualizați fișierul selectat
+  };
   const classes = useStyles();
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert("No file selected!"); // Sau puteți folosi o notificare mai elegantă
+      return;
+    }
+
+    console.log(`Uploading ${selectedFile.name} to ${selectedTableName}`);
+
+    const success = await uploadFileToServer(
+      selectedFile,
+      selectedTableName,
+      database
+    );
+
+    if (success) {
+      handleSuccessAction(); // Apelați funcția furnizată pentru succes
+    } else {
+      alert("There was an error uploading the file."); // Din nou, puteți folosi o notificare mai elegantă
+    }
+  };
+
+  const uploadFileToServer = async (file, tableName, databaseName) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("tableName", tableName);
+    formData.append("databaseName", databaseName);
+
+    try {
+      const response = await fetch("https://localhost:7010/api/importToTable", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.status !== 200) {
+        const data = await response.json();
+        console.error("Error uploading the file:", data);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("There was an error sending the request:", error);
+      return false;
+    }
+  };
+
   return (
     <Dialog
       open={showDialog}
       onClose={handleCancelAction}
       aria-labelledby="import-data-form-dialog-title"
     >
+      <label htmlFor="file-upload">
+        <input
+          accept=".csv, .sql, .json, .xml"
+          className={classes.input}
+          id="file-upload"
+          type="file"
+          onChange={handleFileChange} // Adăugați gestionarul de schimbare
+        />
+        <Button variant="outlined" color="secondary" component={"span"}>
+          {DEFAULT_STRINGS.BUTTON_OPEN_TEXT}
+        </Button>
+      </label>
+
       {/* Title Section */}
       <DialogTitle
         id="import-data-form-dialog-title"
@@ -64,8 +134,8 @@ const ImportFormDialog = ({
         </Button>
         <Button
           variant="contained"
-          onClick={handleSuccessAction}
           color="secondary"
+          onClick={() => handleUpload()}
         >
           {DEFAULT_STRINGS.BUTTON_UPLOAD_TEXT}
         </Button>

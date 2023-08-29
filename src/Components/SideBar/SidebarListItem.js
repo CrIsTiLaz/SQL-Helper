@@ -2,7 +2,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import TableChartOutlinedIcon from "@material-ui/icons/TableChartOutlined";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
@@ -16,7 +16,7 @@ import Box from "@material-ui/core/Box";
 import Tooltip from "@material-ui/core/Tooltip";
 import { DEFAULT_STRINGS } from "../../utils/constants/common";
 import PropTypes from "prop-types";
-
+import TableNameContext from "../../context/TableNameContext";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(2),
@@ -35,9 +35,11 @@ const useStyles = makeStyles((theme) => ({
 //  Collapsible ListItem Component for  SideBar
 const SidebarListItem = ({ listItem, subtitle, icon }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { setSelectedTableName } = useContext(TableNameContext);
   const classes = useStyles();
   const toggleListItem = () => {
     setIsOpen((value) => !value);
+    setSelectedTableName(tableName);
   };
   const { tableName, columns } = listItem;
 
