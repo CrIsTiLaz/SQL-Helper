@@ -1,37 +1,29 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { useEffect, createContext, useState } from "react";
 import { getTablesMockData } from "../utils/mockDataF";
 import { useLocation } from "react-router-dom";
 
 export const AppContext = createContext(null);
 
-export const AppContextProvider = ({ children, route }) => {
+export const AppContextProvider = ({ children }) => {
   const [data, setData] = useState([]);
-  const [databaseName, setDatabaseName] = useState(""); // Adaugă o stare pentru databaseName
-  const [result, setResult] = useState(""); // Adaugă o stare pentru databaseName
+  const [databaseName, setDatabaseName] = useState("");
+  const [result, setResult] = useState(""); // Corrected the comment
   const location = useLocation();
+
   useEffect(() => {
     async function getData() {
-      const database = location.state.database;
-      console.log("database name from appContext", database);
-      setDatabaseName(database);
-      const newData = await getTablesMockData(database);
-      setData(newData);
+      const database = location.state?.database;
+      if (database) {
+        setDatabaseName(database);
+        const newData = await getTablesMockData(database);
+        setData(newData);
+      }
     }
     getData();
-  }, []);
+  }, [location.state?.database]);
+
   return (
-    <AppContext.Provider
-      value={{
-        tablesData: data,
-        database: databaseName,
-      }}
-    >
+    <AppContext.Provider value={{ tablesData: data, database: databaseName }}>
       {children}
     </AppContext.Provider>
   );

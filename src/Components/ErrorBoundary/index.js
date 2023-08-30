@@ -3,12 +3,6 @@ import Container from "@material-ui/core/Container";
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-/**
- * Error Boundaries can only be class object
- * Takes care of Error thrown by the components
- * Display Fallback UI
- * */
-
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +10,6 @@ class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true, error };
   }
 
@@ -27,7 +20,6 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
       return (
         <Container>
           <Typography variant="h6">Something went wrong</Typography>

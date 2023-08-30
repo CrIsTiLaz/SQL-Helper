@@ -9,10 +9,7 @@ import { useContext } from "react";
  */
 
 function useQueryResultContext(callback = (context) => context) {
-  // App Context
   const ctx = useContext(QueryResultContext);
-  console.log("ctx", ctx);
-  // Return the up-to-date selected value
   return callback(ctx);
 }
 

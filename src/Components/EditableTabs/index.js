@@ -20,7 +20,6 @@ const useStyles = makeStyles({
   },
 });
 
-// styles for tabs Wrapper
 const useTabsWrapperStyles = makeStyles((theme) => ({
   root: {
     flex: 1,
@@ -34,7 +33,6 @@ const useTabsWrapperStyles = makeStyles((theme) => ({
   },
 }));
 
-// Component to create list of Editable tabs i.e allowing to add/delete tabs
 const EditableTabs = ({
   tabsList = [],
   onTabChange = noop,

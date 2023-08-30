@@ -7,7 +7,6 @@ import NoteOutlinedIcon from "@material-ui/icons/NoteOutlined";
 import { noop } from "../../utils/constants/common";
 import PropTypes from "prop-types";
 
-// Styles for custom tab
 const useStyles = makeStyles((theme) => ({
   tabItemWrapper: {
     flexDirection: "row",
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/** Custom Tab Component with Delete Button */
 export const CustomTab = ({ tab, onDelete = noop, ...props }) => {
   const classes = useStyles();
   return (
@@ -70,7 +68,6 @@ export const CustomTab = ({ tab, onDelete = noop, ...props }) => {
   );
 };
 
-// Tab Label
 const TabLabel = ({ classes, tab, onDelete }) => {
   return tab.canDelete ? (
     <Box display="flex" alignItems="center">

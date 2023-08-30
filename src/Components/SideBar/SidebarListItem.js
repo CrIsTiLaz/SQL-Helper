@@ -31,8 +31,6 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
   },
 }));
-
-//  Collapsible ListItem Component for  SideBar
 const SidebarListItem = ({ listItem, subtitle, icon }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { setSelectedTableName } = useContext(TableNameContext);

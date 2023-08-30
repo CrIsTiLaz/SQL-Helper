@@ -7,8 +7,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 
-/** Custom Styled Dialog Components with Action Buttons */
-
 const styles = (theme) => ({
   root: {
     margin: 0,

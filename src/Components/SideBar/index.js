@@ -8,13 +8,7 @@ import EmptyState from "../EmptyState";
 import SidebarListItem from "./SidebarListItem";
 import { DEFAULT_STRINGS, DRAWER_WIDTH } from "../../utils/constants/common";
 import Proptypes from "prop-types";
-import Book from "@material-ui/icons/Book";
-import { getSyntaxMockData } from "../../utils/mockDataF";
-import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from "@material-ui/core/IconButton";
 import React from "react";
-import TableNameContext from "../../context/TableNameContext";
-// SideBar Styles
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
@@ -39,10 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// SideBar Component
 const SideBar = ({ showDrawer = true, items = [] }) => {
   const classes = useStyles();
-  //const { selectedTableName } = useContext(TableNameContext);
   return (
     <Drawer
       variant="permanent"
@@ -54,15 +46,6 @@ const SideBar = ({ showDrawer = true, items = [] }) => {
       }}
       open={showDrawer}
     >
-      <IconButton
-        className={classes.menuButton}
-        //onClick={onMenuButtonClick}
-        disableRipple
-        edge="start"
-        aria-label="sidebar menu"
-      >
-        <MenuIcon />
-      </IconButton>
       <Box p={2}>
         <Typography variant="h6">{DEFAULT_STRINGS.TABLES}</Typography>
       </Box>
@@ -82,13 +65,6 @@ const SideBar = ({ showDrawer = true, items = [] }) => {
           ))}
         </List>
       )}
-      <Box py={2}>
-        <SidebarListItem
-          listItem={getSyntaxMockData()}
-          icon={<Book />}
-          subtitle={"Queries"}
-        />
-      </Box>
     </Drawer>
   );
 };

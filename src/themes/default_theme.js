@@ -1,7 +1,6 @@
 import red from "@material-ui/core/colors/red";
 import createTheme from "@material-ui/core/styles/createTheme";
 
-// A custom default theme for this app
 const DefaultTheme = createTheme({
   palette: {
     primary: {

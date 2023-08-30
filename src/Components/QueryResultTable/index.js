@@ -1,12 +1,15 @@
-import Paper from "@material-ui/core/Paper";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import React, { useMemo, useState } from "react";
+import React, { useState, useMemo } from "react";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow,
+  makeStyles,
+} from "@material-ui/core";
+
 import TableHeader from "./TableHeader";
 import TableRowDialog from "./TableRowDialog";
 
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
   tableContainer: {
-    flex: "1",
+    flex: 1,
     position: "relative",
     overflowY: "auto",
   },
@@ -37,74 +40,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//  Generate and return the metadata with info needed for table Header
-const getTableHeaderCells = (metaData) => {
-  return (
-    metaData &&
-    metaData.columns &&
-    metaData.columns.map((column) => ({
-      id: column.name,
-      numeric: false,
-      label: `${column.name}`,
-    }))
-  );
-};
-
 const QueryResultTable = ({ tableData = {} }) => {
   const classes = useStyles();
-  console.log("tableDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ", tableData);
-  // state for paginatination
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  console.log("tableData ", tableData);
   const { rows: tableRows = [] } = tableData;
 
-  const columnNames =
-    tableData.rows && tableData.rows.length > 0
-      ? Object.keys(tableData.rows[0])
-      : [];
+  // States and hooks
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [showTableRowDialog, setShowTableRowDialog] = useState(false);
+  const [currSelectedRow, setCurrSelectedRow] = useState();
 
-  console.log("columnNames", columnNames);
-  // handles pagination change
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const columnNames = tableRows.length > 0 ? Object.keys(tableRows[0]) : [];
   const headerCells = columnNames.map((name) => ({
     id: name,
     numeric: false,
     label: name,
   }));
-  console.log("headerCells", headerCells);
-  // handles number of result to be show per page
+
+  const filteredRows = useMemo(() => {
+    return tableRows.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  }, [tableRows, page, rowsPerPage]);
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const [showTableRowDialog, setShowTableRowDialog] = useState(false);
-  const [currSelectedRow, setCurrSelectedRow] = useState();
-
-  const toggleTableRowDialogState = () => {
-    setShowTableRowDialog((val) => !val);
-  };
-
-  const handleTableRowDialogSuccess = () => {
-    // handle TableRow Edit/Save functionality here
-    toggleTableRowDialogState();
-    setCurrSelectedRow({});
-  };
-
+  const toggleTableRowDialogState = () =>
+    setShowTableRowDialog((prev) => !prev);
   const handleTableRowClick = (row) => {
     setCurrSelectedRow(row);
     toggleTableRowDialogState();
   };
-
-  // list of table rows based on the pagination filter
-  const filteredRows = useMemo(() => {
-    return tableRows.length > 0
-      ? tableRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      : [];
-  }, [tableRows, page, rowsPerPage]);
 
   return (
     <Paper className={classes.paper}>
@@ -114,40 +84,32 @@ const QueryResultTable = ({ tableData = {} }) => {
           aria-labelledby="tableTitle"
           aria-label="Query result table"
         >
-          {/* Table Header */}
           <TableHeader
             headerCells={headerCells}
             rowCount={filteredRows.length}
           />
-
-          {/* Table Body */}
           <TableBody>
-            {filteredRows.map((row, index) => {
-              return (
-                <TableRow
-                  className={classes.tableRowItem}
-                  hover
-                  tabIndex={-1}
-                  key={`result-row-${row.id || index}`}
-                  onClick={() => {
-                    handleTableRowClick(row);
-                  }}
-                >
-                  {Object.keys(row).map((key) => (
-                    <TableCell
-                      className={classes.tableCell}
-                      key={`result-cell-${key}-${row.id || index}`}
-                    >
-                      {row[key]}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              );
-            })}
+            {filteredRows.map((row, index) => (
+              <TableRow
+                className={classes.tableRowItem}
+                hover
+                tabIndex={-1}
+                key={`result-row-${row.id || index}`}
+                onClick={() => handleTableRowClick(row)}
+              >
+                {Object.keys(row).map((key) => (
+                  <TableCell
+                    className={classes.tableCell}
+                    key={`result-cell-${key}-${row.id || index}`}
+                  >
+                    {row[key]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* Table Pagination Controls */}
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
@@ -162,7 +124,7 @@ const QueryResultTable = ({ tableData = {} }) => {
         row={currSelectedRow}
         showDialog={showTableRowDialog}
         handleCancelAction={toggleTableRowDialogState}
-        handleSuccessAction={handleTableRowDialogSuccess}
+        handleSuccessAction={toggleTableRowDialogState}
       />
     </Paper>
   );

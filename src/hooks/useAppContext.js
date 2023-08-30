@@ -9,10 +9,8 @@ import { useContext } from "react";
  */
 
 function useAppContext(callback = (context) => context) {
-  // App Context
   const ctx = useContext(AppContext);
 
-  // Return the up-to-date selected value
   return callback(ctx);
 }
 

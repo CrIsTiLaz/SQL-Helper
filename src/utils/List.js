@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import StorageIcon from "@material-ui/icons/Storage";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -24,8 +23,7 @@ const ListaBazeDeDate = ({ bazeDeDate }) => {
   const classes = useStyles();
 
   const redirectToHomePage = (numeBazaDeDate) => {
-    // Redirecționează către pagina de start
-    navigate("/test", { state: { database: numeBazaDeDate } });
+    navigate("/home", { state: { database: numeBazaDeDate } });
   };
 
   return (

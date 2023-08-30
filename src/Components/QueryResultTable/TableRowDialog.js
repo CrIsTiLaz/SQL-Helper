@@ -35,7 +35,6 @@ const TableRowDialog = ({
       onClose={handleCancelAction}
       aria-labelledby="import-data-form-dialog-title"
     >
-      {/* Title Section */}
       <DialogTitle
         id="import-data-form-dialog-title"
         onClose={handleCancelAction}
@@ -43,7 +42,6 @@ const TableRowDialog = ({
         {DEFAULT_STRINGS.TABLE_ROW_DIALOG}
       </DialogTitle>
 
-      {/* Dialog Content Area */}
       <DialogContent dividers>
         {Object.keys(row).map((columnName) => (
           <Box display="flex" my={3} flexDirection="column">
@@ -64,7 +62,6 @@ const TableRowDialog = ({
         ))}
       </DialogContent>
 
-      {/* Dialog Action Buttons */}
       <DialogActions>
         <Button onClick={handleCancelAction} color="default">
           {DEFAULT_STRINGS.BUTTON_CLOSE_TEXT}

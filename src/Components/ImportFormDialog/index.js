@@ -9,6 +9,7 @@ import { DEFAULT_STRINGS, noop } from "../../utils/constants/common";
 import TableNameContext from "../../context/TableNameContext";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
+
 const useStyles = makeStyles({
   input: {
     display: "none",
@@ -21,33 +22,28 @@ const ImportFormDialog = ({
   handleSuccessAction = noop,
 }) => {
   const { selectedTableName } = useContext(TableNameContext);
-
-  const [selectedFile, setSelectedFile] = useState(null); // Stare pentru fișier
+  const [selectedFile, setSelectedFile] = useState(null);
   const { database } = useContext(AppContext);
-  console.log("database from import", database);
-  console.log("selectedTableName import", selectedTableName);
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]); // Actualizați fișierul selectat
-  };
   const classes = useStyles();
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert("No file selected!"); // Sau puteți folosi o notificare mai elegantă
+      alert("No file selected!");
       return;
     }
-
-    console.log(`Uploading ${selectedFile.name} to ${selectedTableName}`);
-
     const success = await uploadFileToServer(
       selectedFile,
       selectedTableName,
       database
     );
-
     if (success) {
-      handleSuccessAction(); // Apelați funcția furnizată pentru succes
+      handleSuccessAction();
     } else {
-      alert("There was an error uploading the file."); // Din nou, puteți folosi o notificare mai elegantă
+      alert("There was an error uploading the file.");
     }
   };
 
@@ -68,7 +64,6 @@ const ImportFormDialog = ({
         console.error("Error uploading the file:", data);
         return false;
       }
-
       return true;
     } catch (error) {
       console.error("There was an error sending the request:", error);
@@ -82,28 +77,12 @@ const ImportFormDialog = ({
       onClose={handleCancelAction}
       aria-labelledby="import-data-form-dialog-title"
     >
-      <label htmlFor="file-upload">
-        <input
-          accept=".csv, .sql, .json, .xml"
-          className={classes.input}
-          id="file-upload"
-          type="file"
-          onChange={handleFileChange} // Adăugați gestionarul de schimbare
-        />
-        <Button variant="outlined" color="secondary" component={"span"}>
-          {DEFAULT_STRINGS.BUTTON_OPEN_TEXT}
-        </Button>
-      </label>
-
-      {/* Title Section */}
       <DialogTitle
         id="import-data-form-dialog-title"
         onClose={handleCancelAction}
       >
         {DEFAULT_STRINGS.IMPORT_DATA_DIALOG_TITLE}
       </DialogTitle>
-
-      {/* Dialog Content Area */}
       <DialogContent dividers>
         <Typography>{DEFAULT_STRINGS.IMPORT_DATA_HELP_TEXT}</Typography>
         <Box
@@ -119,6 +98,7 @@ const ImportFormDialog = ({
               className={classes.input}
               id="file-upload"
               type="file"
+              onChange={handleFileChange}
             />
             <Button variant="outlined" color="secondary" component={"span"}>
               {DEFAULT_STRINGS.BUTTON_OPEN_TEXT}
@@ -126,17 +106,11 @@ const ImportFormDialog = ({
           </label>
         </Box>
       </DialogContent>
-
-      {/* Dialog Action Buttons */}
       <DialogActions>
         <Button onClick={handleCancelAction} color="default">
           {DEFAULT_STRINGS.BUTTON_CANCEL_TEXT}
         </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleUpload()}
-        >
+        <Button variant="contained" color="secondary" onClick={handleUpload}>
           {DEFAULT_STRINGS.BUTTON_UPLOAD_TEXT}
         </Button>
       </DialogActions>

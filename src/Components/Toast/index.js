@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Toast to show Dismissable Alerts
 const Toast = ({
   show = false,
   containerProps = {},

@@ -15,7 +15,6 @@ import {
 } from "../../utils/constants/common";
 import PropTypes from "prop-types";
 
-// Editor Controls Styles
 const useStyles = makeStyles((theme) => ({
   controlsWrapperRootStyles: {
     display: "flex",
@@ -37,7 +36,7 @@ const EditorControls = ({
   editorTabs = [],
   updateEditorTabs = noop,
   onRunQuery = noop,
-  onExport = noop, // Adaugă această propietate
+  onExport = noop,
 }) => {
   const classes = useStyles();
   const [showImportDialog, setShowImportDialog] = useState(false);
@@ -94,5 +93,4 @@ EditorControls.propTypes = {
   editorTabs: PropTypes.array,
   updateEditorTabs: PropTypes.func.isRequired,
   onRunQuery: PropTypes.func.isRequired,
-  // onExport: PropTypes.func.isRequired, // Aceasta este noua adăugare
 };

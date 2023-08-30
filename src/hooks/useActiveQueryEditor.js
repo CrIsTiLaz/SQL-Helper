@@ -8,21 +8,16 @@ import {
 
 import { v4 as uuid } from "uuid";
 
-/**
- * Custom hook to handle QueryEditors State and Tabs
- */
 export default function useActiveQueryEditor() {
   const [editorTabs, setEditorTabs] = useState({
     [HOME_TAB_ID]: DEFAULT_EDITOR_TAB,
   });
 
-  // keep track of current active editor tab
   const activeEditorTab = useMemo(
     () => Object.values(editorTabs).find((tab) => tab.isActive === true),
     [editorTabs]
   );
 
-  // handler to update editor state with the query value
   const handleQueryChange = useCallback(
     (queryVal) => {
       setEditorTabs((tabs) => ({
@@ -36,7 +31,6 @@ export default function useActiveQueryEditor() {
     [activeEditorTab]
   );
 
-  // add new editor tab handler
   const addEditorTab = useCallback(() => {
     return new Promise(async (resolve, reject) => {
       const newTabId = `editor_tab_${uuid()}`;
@@ -60,8 +54,6 @@ export default function useActiveQueryEditor() {
       resolve();
     });
   }, [activeEditorTab]);
-
-  // delete editor tab handler
   const deleteEditorTab = useCallback(
     (tabId) => {
       const tabs = { ...editorTabs };
@@ -74,7 +66,6 @@ export default function useActiveQueryEditor() {
     [editorTabs]
   );
 
-  // switch editor tab  handler
   const switchEditorTab = (prevTabId, newTabId) => {
     setEditorTabs((tabs) => ({
       ...tabs,
@@ -89,7 +80,6 @@ export default function useActiveQueryEditor() {
     }));
   };
 
-  // handles all the tabs action
   const updateEditorTabs = useCallback(
     ({ type, data }) => {
       switch (type) {

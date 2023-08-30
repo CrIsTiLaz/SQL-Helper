@@ -5,7 +5,7 @@ const minWidth = 140;
 const menuButtonStyles = () => ({
   buttonContainer: {
     display: "flex",
-    gap: "9px", // Aici poți ajusta cât de mare să fie spațiul între butoane (în pixeli sau în altă unitate de măsură).
+    gap: "9px",
   },
 
   button: {

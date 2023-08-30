@@ -3,8 +3,6 @@ import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import clsx from "clsx";
-import { AppContextProvider } from "../context/AppContext";
-// css styles for Homepage layout
 const useStyles = makeStyles({
   mainContainer: {
     height: "100%",
@@ -24,23 +22,16 @@ const useStyles = makeStyles({
   },
 });
 
-// Home Page Layout
-// we can have different page layouts created for different devices , routes, pages etc
 const HomePageLayout = ({ children, navBar, sideBar }) => {
   const classes = useStyles();
   return (
     <Box height="100vh" width="100vw">
-      {/*  navigation Bar goes here */}
       {navBar}
       <Box component="main" className={clsx(classes.mainContainer)}>
         <Toolbar />
         <Box className={classes.page}>
-          {/* SideBar goes here */}
           {sideBar}
-          <Box className={classes.contentArea}>
-            {/* Content goes here */}
-            {children}
-          </Box>
+          <Box className={classes.contentArea}>{children}</Box>
         </Box>
       </Box>
     </Box>
@@ -48,9 +39,8 @@ const HomePageLayout = ({ children, navBar, sideBar }) => {
 };
 
 HomePageLayout.propTypes = {
-  // componets for nav and sider
   sideBar: PropTypes.element.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element), // page contents
+  children: PropTypes.arrayOf(PropTypes.element),
 };
 
 export default HomePageLayout;

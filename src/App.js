@@ -19,14 +19,13 @@ function App() {
       <TableNameContext.Provider
         value={{ selectedTableName, setSelectedTableName }}
       >
-        {/* Folosiți starea și funcția de setare furnizată aici */}
         <BrowserRouter>
           <Navbar />
           <Routes>
             <Route path="/">
               <Route index element={<Test />} />
               <Route
-                path="test"
+                path="home"
                 element={
                   <AppContextProvider>
                     <Home />
